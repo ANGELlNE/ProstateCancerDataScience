@@ -49,12 +49,12 @@ PREDICTORS_LOG = ["lvol", "lwht", "age", "lbh", "lpc"]
 prostate = pd.read_csv(DATA_PATH, sep=r"\s+")
 
 print("Aperçu :")
-display(prostate.head())
+print(prostate.head())
 
 print(f"Nombre d'observations : {prostate.shape[0]}")
 print(f"Nombre de variables    : {prostate.shape[1]}")
 print("Valeurs manquantes :")
-display(prostate.isna().sum().to_frame("missing"))
+print(prostate.isna().sum().to_frame("missing"))
 
 missing_cols = set(ORIGINAL_COLUMNS) - set(prostate.columns)
 if missing_cols:
@@ -69,7 +69,7 @@ desc = prostate.describe().T
 desc["variance"] = prostate.var(numeric_only=True, ddof=1)
 desc["missing"] = prostate.isna().sum()
 
-display(desc)
+print(desc)
 
 # %%
 # Boxplots lisibles variable par variable
@@ -125,10 +125,10 @@ for col in LOG_COLS:
 prostate_log = prostate_log[["lvol", "lwht", "age", "lbh", "lpc", "lpsa"]].copy()
 
 print("Statistiques descriptives après transformation :")
-display(prostate_log.describe().T)
+print(prostate_log.describe().T)
 
 print("Variances après transformation :")
-display(prostate_log.var(ddof=1).to_frame("variance"))
+print(prostate_log.var(ddof=1).to_frame("variance"))
 
 # %%
 # Scatterplots après transformation
@@ -198,10 +198,10 @@ pve_df = pd.DataFrame({
 })
 
 print("Loadings :")
-display(loadings.round(3))
+print(loadings.round(3))
 
 print("Variance expliquée :")
-display(pve_df.round(3))
+print(pve_df.round(3))
 
 # %%
 # Scree plot + courbe cumulée
@@ -280,7 +280,7 @@ print("Si X1 et X2 sont non corrélés (r12 = 0), alors R² = r1² + r2².")
 # %%
 corr_with_target = prostate_log.corr()[TARGET].drop(TARGET).sort_values(ascending=False)
 print("Corrélations avec lpsa :")
-display(corr_with_target.to_frame("corr_lpsa"))
+print(corr_with_target.to_frame("corr_lpsa"))
 
 best_single_predictor = corr_with_target.index[0]
 print(f"Variable la plus corrélée à lpsa : {best_single_predictor}")
@@ -350,7 +350,7 @@ for k in range(1, len(candidate_features) + 1):
         })
 
 results_df = pd.DataFrame(results).sort_values(by="Adj_R2", ascending=False).reset_index(drop=True)
-display(results_df[["n_features", "features", "R2", "Adj_R2", "AIC", "BIC"]].head(10))
+print(results_df[["n_features", "features", "R2", "Adj_R2", "AIC", "BIC"]].head(10))
 
 # %%
 # Meilleur modèle selon l'Adjusted R²
@@ -393,7 +393,7 @@ coef_table = pd.DataFrame({
     "CI_low": best_model.conf_int()[0],
     "CI_high": best_model.conf_int()[1],
 })
-display(coef_table.round(4))
+print(coef_table.round(4))
 
 # %% [markdown]
 # ## 8. Prédiction pour un nouveau patient
